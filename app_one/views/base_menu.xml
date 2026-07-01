@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_estate_root" name="Real Estate" sequence="10"/>
+
+    <!-- Properties -->
+    <menuitem id="menu_estate_properties" name="Properties" parent="menu_estate_root" sequence="10"/>
+    <menuitem id="menu_estate_property_list" name="All Properties" parent="menu_estate_properties"
+              action="property_action" sequence="10"/>
+    <menuitem id="menu_estate_property_images" name="Property Images" parent="menu_estate_properties"
+              action="property_image_action" sequence="15" groups="app_one.group_estate_admin"/>
+    <menuitem id="menu_estate_property_lines" name="Property Lines" parent="menu_estate_properties"
+              action="property_line_action" sequence="16" groups="app_one.group_estate_admin"/>
+
+    <!-- Owners -->
+    <menuitem id="menu_estate_owners" name="Owners" parent="menu_estate_root" sequence="20"/>
+    <menuitem id="menu_estate_owner_list" name="All Owners" parent="menu_estate_owners"
+              action="owner_action" sequence="10"/>
+
+    <!-- Customers -->
+    <menuitem id="menu_estate_customers" name="Customers" parent="menu_estate_root" sequence="30"/>
+    <menuitem id="menu_estate_customer_list" name="All Customers" parent="menu_estate_customers"
+              action="customer_action" sequence="10"/>
+
+    <!-- Buildings -->
+    <menuitem id="menu_estate_buildings" name="Buildings" parent="menu_estate_root" sequence="40"/>
+    <menuitem id="menu_estate_building_list" name="All Buildings" parent="menu_estate_buildings"
+              action="building_action" sequence="10"/>
+
+    <!-- Tags -->
+    <menuitem id="menu_estate_tags" name="Tags" parent="menu_estate_root" sequence="50"/>
+    <menuitem id="menu_estate_tag_list" name="All Tags" parent="menu_estate_tags"
+              action="tag_action" sequence="10"/>
+
+    <!-- Configuration -->
+    <menuitem id="menu_estate_configuration" name="Configuration" parent="menu_estate_root" sequence="100"/>
+
+    <!-- Users (under Configuration) -->
+    <menuitem id="menu_estate_users" name="Users" parent="menu_estate_configuration" sequence="10"/>
+    <menuitem id="menu_estate_users_list" name="All Users" parent="menu_estate_users"
+              action="action_estate_users" sequence="10"/>
+
+    <!-- Auth Tokens (under Configuration) -->
+    <menuitem id="estate_auth_token_menu_item" name="Auth Tokens" parent="menu_estate_configuration"
+              action="estate_auth_token_action" sequence="20" groups="app_one.group_estate_admin"/>
+
+    <!-- OTP Verifications (under Configuration) -->
+    <menuitem id="estate_otp_menu_item" name="OTP Verifications" parent="menu_estate_configuration"
+              action="estate_otp_action" sequence="30" groups="app_one.group_estate_admin"/>
+</odoo>

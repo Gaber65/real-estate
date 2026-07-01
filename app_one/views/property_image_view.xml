@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="property_image_view_tree" model="ir.ui.view">
+        <field name="name">property.image.tree</field>
+        <field name="model">property.image</field>
+        <field name="arch" type="xml">
+            <tree string="Property Images">
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="image_1920" widget="image" width="100" height="100"/>
+                <field name="property_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="property_image_view_form" model="ir.ui.view">
+        <field name="name">property.image.form</field>
+        <field name="model">property.image</field>
+        <field name="arch" type="xml">
+            <form string="Property Image">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="name"/>
+                            <field name="property_id" required="1"/>
+                        </group>
+                        <group>
+                            <field name="image_1920" widget="image" class="oe_avatar"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="property_image_view_search" model="ir.ui.view">
+        <field name="name">property.image.search</field>
+        <field name="model">property.image</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="property_id"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="property_image_action" model="ir.actions.act_window">
+        <field name="name">Property Images</field>
+        <field name="res_model">property.image</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- ===== REMOVE THIS MENUITEM ===== -->
+</odoo>

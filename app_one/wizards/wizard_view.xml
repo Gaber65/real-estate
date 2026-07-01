@@ -1,0 +1,31 @@
+<odoo>
+
+    <record id="view_property_close_wizard_form" model="ir.ui.view">
+        <field name="name">change.state.wizard.form</field>
+        <field name="model">change.state.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Close Property">
+                <group>
+                    <field name="reason"/>
+                </group>
+
+                <footer>
+                    <button name="action_confirm"
+                            type="object"
+                            string="Confirm"
+                            class="btn-primary"/>
+
+                    <button string="Cancel"
+                            special="cancel"
+                            class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_property_close_wizard" model="ir.actions.act_window">
+        <field name="name">Close Property</field>
+        <field name="res_model">change.state.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

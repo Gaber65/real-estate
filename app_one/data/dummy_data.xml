@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ============================================ -->
+        <!-- TAGS                                        -->
+        <!-- ============================================ -->
+        <record id="tag_residential" model="tag">
+            <field name="name">Residential</field>
+        </record>
+        <record id="tag_commercial" model="tag">
+            <field name="name">Commercial</field>
+        </record>
+        <record id="tag_luxury" model="tag">
+            <field name="name">Luxury</field>
+        </record>
+        <record id="tag_apartment" model="tag">
+            <field name="name">Apartment</field>
+        </record>
+        <record id="tag_villa" model="tag">
+            <field name="name">Villa</field>
+        </record>
+        <record id="tag_waterfront" model="tag">
+            <field name="name">Waterfront</field>
+        </record>
+        <record id="tag_downtown" model="tag">
+            <field name="name">Downtown</field>
+        </record>
+        <record id="tag_furnished" model="tag">
+            <field name="name">Furnished</field>
+        </record>
+        <record id="tag_garage_included" model="tag">
+            <field name="name">Garage Included</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- OWNERS                                      -->
+        <!-- ============================================ -->
+        <record id="owner_1" model="owner">
+            <field name="name">John Smith</field>
+            <field name="address">123 Main Street, New York, NY 10001</field>
+            <field name="phone">+1 212-555-0101</field>
+        </record>
+        <record id="owner_2" model="owner">
+            <field name="name">Sarah Johnson</field>
+            <field name="address">456 Oak Avenue, Los Angeles, CA 90001</field>
+            <field name="phone">+1 310-555-0202</field>
+        </record>
+        <record id="owner_3" model="owner">
+            <field name="name">Michael Brown</field>
+            <field name="address">789 Pine Road, Chicago, IL 60601</field>
+            <field name="phone">+1 312-555-0303</field>
+        </record>
+        <record id="owner_4" model="owner">
+            <field name="name">Emily Davis</field>
+            <field name="address">321 Elm Street, Houston, TX 77001</field>
+            <field name="phone">+1 713-555-0404</field>
+        </record>
+        <record id="owner_5" model="owner">
+            <field name="name">David Wilson</field>
+            <field name="address">654 Maple Drive, Phoenix, AZ 85001</field>
+            <field name="phone">+1 602-555-0505</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BUILDINGS                                   -->
+        <!-- ============================================ -->
+        <record id="building_1" model="building">
+            <field name="name">Tower A</field>
+            <field name="description">Luxury residential tower with 30 floors</field>
+            <field name="code">TWR-A</field>
+            <field name="active">True</field>
+        </record>
+        <record id="building_2" model="building">
+            <field name="name">Plaza</field>
+            <field name="description">Commercial and retail complex</field>
+            <field name="code">PLZ-B</field>
+            <field name="active">True</field>
+        </record>
+        <record id="building_3" model="building">
+            <field name="name">Villa</field>
+            <field name="description">Gated community with private villas</field>
+            <field name="code">VIL-C</field>
+            <field name="active">True</field>
+        </record>
+        <record id="building_4" model="building">
+            <field name="name">Heights</field>
+            <field name="description">Modern apartment complex with rooftop garden</field>
+            <field name="code">HGT-D</field>
+            <field name="active">True</field>
+        </record>
+        <record id="building_5" model="building">
+            <field name="name">Cove</field>
+            <field name="description">Beachfront property with ocean views</field>
+            <field name="code">COV-E</field>
+            <field name="active">True</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- PROPERTIES                                  -->
+        <!-- ============================================ -->
+        <record id="property_1" model="property">
+            <field name="name">Downtown Luxury Apartment</field>
+            <field name="description">Stunning 3-bedroom apartment in the heart of the city</field>
+            <field name="postcode">10001</field>
+            <field name="date_availability">2026-07-15</field>
+            <field name="tag_ids" eval="[(6,0,[ref('tag_residential'), ref('tag_apartment'), ref('tag_luxury'), ref('tag_downtown')])]"/>
+            <field name="expected_price">850000.00</field>
+            <field name="profit_percentage">20.0</field>
+            <field name="building_id" ref="building_1"/>
+            <field name="bedrooms">3</field>
+            <field name="living_area">180</field>
+            <field name="facades">2</field>
+            <field name="garage">True</field>
+            <field name="garden">False</field>
+            <field name="garden_area">0</field>
+            <field name="owner_id" ref="owner_1"/>
+            <field name="state">pending</field>
+            <field name="expected_selling_date">2026-08-15</field>
+        </record>
+
+        <record id="property_2" model="property">
+            <field name="name">Beachfront Villa</field>
+            <field name="description">Exclusive 5-bedroom villa with panoramic ocean views</field>
+            <field name="postcode">90210</field>
+            <field name="date_availability">2026-06-01</field>
+            <field name="tag_ids" eval="[(6,0,[ref('tag_residential'), ref('tag_villa'), ref('tag_luxury'), ref('tag_waterfront')])]"/>
+            <field name="expected_price">2500000.00</field>
+            <field name="profit_percentage">25.0</field>
+            <field name="building_id" ref="building_5"/>
+            <field name="bedrooms">5</field>
+            <field name="living_area">350</field>
+            <field name="facades">3</field>
+            <field name="garage">True</field>
+            <field name="garden">True</field>
+            <field name="garden_area">500</field>
+            <field name="owner_id" ref="owner_2"/>
+            <field name="state">draft</field>
+            <field name="expected_selling_date">2026-09-30</field>
+        </record>
+
+        <record id="property_3" model="property">
+            <field name="name">Commercial Office Space</field>
+            <field name="description">Prime office space in financial district</field>
+            <field name="postcode">60601</field>
+            <field name="date_availability">2026-08-01</field>
+            <field name="tag_ids" eval="[(6,0,[ref('tag_commercial')])]"/>
+            <field name="expected_price">1500000.00</field>
+            <field name="profit_percentage">22.0</field>
+            <field name="building_id" ref="building_2"/>
+            <field name="bedrooms">0</field>
+            <field name="living_area">500</field>
+            <field name="facades">4</field>
+            <field name="garage">False</field>
+            <field name="garden">False</field>
+            <field name="garden_area">0</field>
+            <field name="owner_id" ref="owner_3"/>
+            <field name="state">sold</field>
+            <field name="expected_selling_date">2026-07-01</field>
+        </record>
+
+        <record id="property_4" model="property">
+            <field name="name">Modern Heights Apartment</field>
+            <field name="description">Contemporary 2-bedroom with city skyline views</field>
+            <field name="postcode">77001</field>
+            <field name="date_availability">2026-09-01</field>
+            <field name="tag_ids" eval="[(6,0,[ref('tag_residential'), ref('tag_apartment'), ref('tag_furnished')])]"/>
+            <field name="expected_price">450000.00</field>
+            <field name="profit_percentage">18.0</field>
+            <field name="building_id" ref="building_4"/>
+            <field name="bedrooms">2</field>
+            <field name="living_area">120</field>
+            <field name="facades">2</field>
+            <field name="garage">True</field>
+            <field name="garden">False</field>
+            <field name="garden_area">0</field>
+            <field name="owner_id" ref="owner_4"/>
+            <field name="state">pending</field>
+            <field name="expected_selling_date">2026-09-15</field>
+        </record>
+
+        <record id="property_5" model="property">
+            <field name="name">Suburban Family Home</field>
+            <field name="description">Spacious 4-bedroom home with large backyard</field>
+            <field name="postcode">85001</field>
+            <field name="date_availability">2026-10-01</field>
+            <field name="tag_ids" eval="[(6,0,[ref('tag_residential'), ref('tag_villa'), ref('tag_garage_included')])]"/>
+            <field name="expected_price">620000.00</field>
+            <field name="profit_percentage">20.0</field>
+            <field name="building_id" ref="building_3"/>
+            <field name="bedrooms">4</field>
+            <field name="living_area">220</field>
+            <field name="facades">2</field>
+            <field name="garage">True</field>
+            <field name="garden">True</field>
+            <field name="garden_area">300</field>
+            <field name="owner_id" ref="owner_5"/>
+            <field name="state">draft</field>
+            <field name="expected_selling_date">2026-11-15</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- PROPERTY LINES                              -->
+        <!-- ============================================ -->
+        <record id="property_line_1" model="property.line">
+            <field name="property_id" ref="property_1"/>
+            <field name="description">Living Room</field>
+            <field name="area">45.0</field>
+        </record>
+        <record id="property_line_2" model="property.line">
+            <field name="property_id" ref="property_1"/>
+            <field name="description">Kitchen</field>
+            <field name="area">25.0</field>
+        </record>
+        <record id="property_line_3" model="property.line">
+            <field name="property_id" ref="property_1"/>
+            <field name="description">Master Bedroom</field>
+            <field name="area">30.0</field>
+        </record>
+        <record id="property_line_4" model="property.line">
+            <field name="property_id" ref="property_1"/>
+            <field name="description">Bathroom</field>
+            <field name="area">15.0</field>
+        </record>
+
+        <record id="property_line_5" model="property.line">
+            <field name="property_id" ref="property_2"/>
+            <field name="description">Ocean View Terrace</field>
+            <field name="area">60.0</field>
+        </record>
+        <record id="property_line_6" model="property.line">
+            <field name="property_id" ref="property_2"/>
+            <field name="description">Master Suite</field>
+            <field name="area">50.0</field>
+        </record>
+        <record id="property_line_7" model="property.line">
+            <field name="property_id" ref="property_2"/>
+            <field name="description">Private Pool Area</field>
+            <field name="area">80.0</field>
+        </record>
+
+        <record id="property_line_8" model="property.line">
+            <field name="property_id" ref="property_3"/>
+            <field name="description">Open Plan Office</field>
+            <field name="area">200.0</field>
+        </record>
+        <record id="property_line_9" model="property.line">
+            <field name="property_id" ref="property_3"/>
+            <field name="description">Meeting Room</field>
+            <field name="area">40.0</field>
+        </record>
+        <record id="property_line_10" model="property.line">
+            <field name="property_id" ref="property_3"/>
+            <field name="description">Reception Area</field>
+            <field name="area">30.0</field>
+        </record>
+
+        <record id="property_line_11" model="property.line">
+            <field name="property_id" ref="property_4"/>
+            <field name="description">Living Area</field>
+            <field name="area">35.0</field>
+        </record>
+        <record id="property_line_12" model="property.line">
+            <field name="property_id" ref="property_4"/>
+            <field name="description">Bedroom 1</field>
+            <field name="area">20.0</field>
+        </record>
+        <record id="property_line_13" model="property.line">
+            <field name="property_id" ref="property_4"/>
+            <field name="description">Bedroom 2</field>
+            <field name="area">18.0</field>
+        </record>
+
+        <record id="property_line_14" model="property.line">
+            <field name="property_id" ref="property_5"/>
+            <field name="description">Family Room</field>
+            <field name="area">55.0</field>
+        </record>
+        <record id="property_line_15" model="property.line">
+            <field name="property_id" ref="property_5"/>
+            <field name="description">Kitchen</field>
+            <field name="area">30.0</field>
+        </record>
+        <record id="property_line_16" model="property.line">
+            <field name="property_id" ref="property_5"/>
+            <field name="description">Master Bedroom</field>
+            <field name="area">35.0</field>
+        </record>
+        <record id="property_line_17" model="property.line">
+            <field name="property_id" ref="property_5"/>
+            <field name="description">Guest Bedroom</field>
+            <field name="area">25.0</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- PROPERTY IMAGES                             -->
+        <!-- ============================================ -->
+        <!-- Property 1 Images -->
+        <record id="property_image_1_1" model="property.image">
+            <field name="sequence">10</field>
+            <field name="name">Exterior View</field>
+            <field name="property_id" ref="property_1"/>
+        </record>
+        <record id="property_image_1_2" model="property.image">
+            <field name="sequence">20</field>
+            <field name="name">Living Room</field>
+            <field name="property_id" ref="property_1"/>
+        </record>
+        <record id="property_image_1_3" model="property.image">
+            <field name="sequence">30</field>
+            <field name="name">Kitchen</field>
+            <field name="property_id" ref="property_1"/>
+        </record>
+        <record id="property_image_1_4" model="property.image">
+            <field name="sequence">40</field>
+            <field name="name">Bedroom</field>
+            <field name="property_id" ref="property_1"/>
+        </record>
+
+        <!-- Property 2 Images -->
+        <record id="property_image_2_1" model="property.image">
+            <field name="sequence">10</field>
+            <field name="name">Villa Exterior</field>
+            <field name="property_id" ref="property_2"/>
+        </record>
+        <record id="property_image_2_2" model="property.image">
+            <field name="sequence">20</field>
+            <field name="name">Ocean View</field>
+            <field name="property_id" ref="property_2"/>
+        </record>
+        <record id="property_image_2_3" model="property.image">
+            <field name="sequence">30</field>
+            <field name="name">Pool Area</field>
+            <field name="property_id" ref="property_2"/>
+        </record>
+        <record id="property_image_2_4" model="property.image">
+            <field name="sequence">40</field>
+            <field name="name">Garden</field>
+            <field name="property_id" ref="property_2"/>
+        </record>
+
+        <!-- Property 3 Images -->
+        <record id="property_image_3_1" model="property.image">
+            <field name="sequence">10</field>
+            <field name="name">Office Building</field>
+            <field name="property_id" ref="property_3"/>
+        </record>
+        <record id="property_image_3_2" model="property.image">
+            <field name="sequence">20</field>
+            <field name="name">Interior Office</field>
+            <field name="property_id" ref="property_3"/>
+        </record>
+
+        <!-- Property 4 Images -->
+        <record id="property_image_4_1" model="property.image">
+            <field name="sequence">10</field>
+            <field name="name">Apartment Exterior</field>
+            <field name="property_id" ref="property_4"/>
+        </record>
+        <record id="property_image_4_2" model="property.image">
+            <field name="sequence">20</field>
+            <field name="name">City View</field>
+            <field name="property_id" ref="property_4"/>
+        </record>
+
+        <!-- Property 5 Images -->
+        <record id="property_image_5_1" model="property.image">
+            <field name="sequence">10</field>
+            <field name="name">Home Exterior</field>
+            <field name="property_id" ref="property_5"/>
+        </record>
+        <record id="property_image_5_2" model="property.image">
+            <field name="sequence">20</field>
+            <field name="name">Backyard</field>
+            <field name="property_id" ref="property_5"/>
+        </record>
+        <record id="property_image_5_3" model="property.image">
+            <field name="sequence">30</field>
+            <field name="name">Living Room</field>
+            <field name="property_id" ref="property_5"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- CLIENTS (inherit from Owner)                -->
+        <!-- ============================================ -->
+        <record id="client_1" model="client">
+            <field name="name">Client A - ABC Corp</field>
+            <field name="address">100 Corporate Plaza, New York, NY 10001</field>
+            <field name="phone">+1 212-555-1001</field>
+        </record>
+        <record id="client_2" model="client">
+            <field name="name">Client B - XYZ Ltd</field>
+            <field name="address">200 Business Park, Los Angeles, CA 90001</field>
+            <field name="phone">+1 310-555-2002</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- USERS (Admin / Agents / Owners / Customers) -->
+        <!-- ============================================ -->
+        <record id="user_admin_1" model="res.users">
+            <field name="name">Nadia Amin (Admin)</field>
+            <field name="login">admin.demo@estate.com</field>
+            <field name="email">admin.demo@estate.com</field>
+            <field name="phone">+1 202-555-9001</field>
+            <field name="user_type">admin</field>
+            <field name="is_verified">True</field>
+        </record>
+
+        <record id="user_agent_1" model="res.users">
+            <field name="name">Karim Hassan</field>
+            <field name="login">karim.agent@estate.com</field>
+            <field name="email">karim.agent@estate.com</field>
+            <field name="phone">+1 212-555-9101</field>
+            <field name="user_type">agent</field>
+            <field name="is_verified">True</field>
+        </record>
+        <record id="user_agent_2" model="res.users">
+            <field name="name">Laura Chen</field>
+            <field name="login">laura.agent@estate.com</field>
+            <field name="email">laura.agent@estate.com</field>
+            <field name="phone">+1 310-555-9102</field>
+            <field name="user_type">agent</field>
+            <field name="is_verified">True</field>
+        </record>
+
+        <record id="user_owner_1" model="res.users">
+            <field name="name">John Smith</field>
+            <field name="login">john.smith.owner@estate.com</field>
+            <field name="email">john.smith.owner@estate.com</field>
+            <field name="phone">+1 212-555-0101</field>
+            <field name="user_type">owner</field>
+            <field name="is_verified">True</field>
+        </record>
+        <record id="user_owner_2" model="res.users">
+            <field name="name">Sarah Johnson</field>
+            <field name="login">sarah.johnson.owner@estate.com</field>
+            <field name="email">sarah.johnson.owner@estate.com</field>
+            <field name="phone">+1 310-555-0202</field>
+            <field name="user_type">owner</field>
+            <field name="is_verified">True</field>
+        </record>
+
+        <record id="user_customer_1" model="res.users">
+            <field name="name">Omar Farouk</field>
+            <field name="login">omar.customer@estate.com</field>
+            <field name="email">omar.customer@estate.com</field>
+            <field name="phone">+1 415-555-9201</field>
+            <field name="user_type">customer</field>
+            <field name="is_verified">True</field>
+        </record>
+        <record id="user_customer_2" model="res.users">
+            <field name="name">Mona Adel</field>
+            <field name="login">mona.customer@estate.com</field>
+            <field name="email">mona.customer@estate.com</field>
+            <field name="phone">+1 415-555-9202</field>
+            <field name="user_type">customer</field>
+            <field name="is_verified">False</field>
+        </record>
+        <record id="user_customer_3" model="res.users">
+            <field name="name">Ahmed Tarek</field>
+            <field name="login">ahmed.customer@estate.com</field>
+            <field name="email">ahmed.customer@estate.com</field>
+            <field name="phone">+1 415-555-9203</field>
+            <field name="user_type">customer</field>
+            <field name="is_verified">True</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- LINK OWNER PROFILES TO OWNER USER ACCOUNTS  -->
+        <!-- ============================================ -->
+        <record id="owner_1" model="owner">
+            <field name="user_id" ref="user_owner_1"/>
+        </record>
+        <record id="owner_2" model="owner">
+            <field name="user_id" ref="user_owner_2"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- CUSTOMER PROFILES (estate.customer)         -->
+        <!-- ============================================ -->
+        <record id="customer_profile_1" model="estate.customer">
+            <field name="user_id" ref="user_customer_1"/>
+            <field name="preferred_contact">phone</field>
+            <field name="notes">Looking for a downtown apartment, flexible on move-in date.</field>
+            <field name="min_price">400000</field>
+            <field name="max_price">900000</field>
+            <field name="preferred_area">Downtown</field>
+            <field name="interested_property_ids" eval="[(6,0,[ref('property_1'), ref('property_4')])]"/>
+        </record>
+        <record id="customer_profile_2" model="estate.customer">
+            <field name="user_id" ref="user_customer_2"/>
+            <field name="preferred_contact">whatsapp</field>
+            <field name="notes">Interested in beachfront properties only.</field>
+            <field name="min_price">1500000</field>
+            <field name="max_price">3000000</field>
+            <field name="preferred_area">Waterfront</field>
+            <field name="interested_property_ids" eval="[(6,0,[ref('property_2')])]"/>
+        </record>
+        <record id="customer_profile_3" model="estate.customer">
+            <field name="user_id" ref="user_customer_3"/>
+            <field name="preferred_contact">email</field>
+            <field name="notes">Already closed on an office space purchase.</field>
+            <field name="min_price">1000000</field>
+            <field name="max_price">2000000</field>
+            <field name="preferred_area">Financial District</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- ASSIGN AGENTS / OWNER USERS / CUSTOMERS TO PROPERTIES -->
+        <!-- ============================================ -->
+        <record id="property_1" model="property">
+            <field name="agent_user_id" ref="user_agent_2"/>
+            <field name="owner_user_id" ref="user_owner_1"/>
+        </record>
+        <record id="property_2" model="property">
+            <field name="agent_user_id" ref="user_agent_1"/>
+            <field name="owner_user_id" ref="user_owner_2"/>
+        </record>
+        <record id="property_3" model="property">
+            <field name="agent_user_id" ref="user_agent_1"/>
+            <field name="customer_user_id" ref="user_customer_3"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- OTP VERIFICATION RECORDS                    -->
+        <!-- ============================================ -->
+        <record id="otp_1" model="estate.otp">
+            <field name="phone">+1 415-555-9201</field>
+            <field name="otp_code">483920</field>
+            <field name="expires_at" eval="(DateTime.now() + relativedelta(minutes=5)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="verified">True</field>
+            <field name="attempt_count">1</field>
+            <field name="purpose">verify</field>
+        </record>
+        <record id="otp_2" model="estate.otp">
+            <field name="phone">+1 415-555-9202</field>
+            <field name="otp_code">115577</field>
+            <field name="expires_at" eval="(DateTime.now() - relativedelta(minutes=10)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="verified">False</field>
+            <field name="attempt_count">2</field>
+            <field name="purpose">verify</field>
+        </record>
+        <record id="otp_3" model="estate.otp">
+            <field name="phone">+1 212-555-9101</field>
+            <field name="otp_code">902341</field>
+            <field name="expires_at" eval="(DateTime.now() + relativedelta(minutes=5)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="verified">False</field>
+            <field name="attempt_count">0</field>
+            <field name="purpose">reset</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- AUTH TOKENS                                  -->
+        <!-- ============================================ -->
+        <record id="auth_token_1" model="estate.auth.token">
+            <field name="user_id" ref="user_customer_1"/>
+            <field name="access_token">demo-access-token-a1b2c3d4e5f6</field>
+            <field name="refresh_token">demo-refresh-token-f6e5d4c3b2a1</field>
+            <field name="expires_at" eval="(DateTime.now() + relativedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="revoked">False</field>
+        </record>
+        <record id="auth_token_2" model="estate.auth.token">
+            <field name="user_id" ref="user_agent_1"/>
+            <field name="access_token">demo-access-token-g7h8i9j0k1l2</field>
+            <field name="refresh_token">demo-refresh-token-l2k1j0i9h8g7</field>
+            <field name="expires_at" eval="(DateTime.now() - relativedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="revoked">True</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View for Users (Inherited) -->
+    <record id="view_res_users_tree_inherited" model="ir.ui.view">
+        <field name="name">res.users.tree.inherited</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="user_type" widget="badge"
+                       decoration-info="user_type == 'agent'"
+                       decoration-success="user_type == 'customer'"
+                       decoration-primary="user_type == 'owner'"
+                       decoration-danger="user_type == 'admin'"/>
+                <field name="phone"/>
+                <field name="is_verified" widget="boolean_toggle"/>
+                <field name="full_name"/>
+                <field name="address"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Form View for Users (Inherited) -->
+    <record id="view_res_users_form_inherited" model="ir.ui.view">
+        <field name="name">res.users.form.inherited</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="full_name" placeholder="Full Name"/>
+            </xpath>
+            <xpath expr="//field[@name='email']/.." position="after">
+                <group string="Estate Settings" name="estate_settings">
+                    <field name="user_type" widget="radio"/>
+                    <field name="phone" widget="phone"/>
+                    <field name="address" placeholder="Address"/>
+                    <field name="profile_image" widget="image"/>
+                    <field name="is_verified" widget="boolean_toggle"/>
+                </group>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Estate Properties" name="estate_properties">
+                    <group string="Owned Properties">
+                        <field name="owned_property_ids">
+                            <tree string="Owned Properties">
+                                <field name="name"/>
+                                <field name="postcode"/>
+                                <field name="expected_price"/>
+                                <field name="state" widget="badge"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group string="Managed Properties">
+                        <field name="managed_property_ids">
+                            <tree string="Managed Properties">
+                                <field name="name"/>
+                                <field name="postcode"/>
+                                <field name="expected_price"/>
+                                <field name="state" widget="badge"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group string="Purchased Properties">
+                        <field name="purchased_property_ids">
+                            <tree string="Purchased Properties">
+                                <field name="name"/>
+                                <field name="postcode"/>
+                                <field name="selling_price"/>
+                                <field name="state" widget="badge"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action to view users -->
+    <record id="action_estate_users" model="ir.actions.act_window">
+        <field name="name">Estate Users</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Manage estate users
+            </p>
+        </field>
+    </record>
+</odoo>

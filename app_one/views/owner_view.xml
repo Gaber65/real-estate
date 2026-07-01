@@ -1,0 +1,67 @@
+<odoo>
+    <record id="owner_view_tree" model="ir.ui.view">
+        <field name="name">owner tree</field>
+        <field name="model">owner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="address"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="owner_view_form" model="ir.ui.view">
+        <field name="name">owner form</field>
+        <field name="model">owner</field>
+        <field name="arch" type="xml">
+            <form string="Owner">
+                <sheet>
+                    <group>
+                        <field name="owner_image" widget="image" class="oe_avatar"/>
+                    </group>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="phone"/>
+                        <field name="address"/>
+                        <field name="property_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="owner_view_search" model="ir.ui.view">
+        <field name="name">owner search</field>
+        <field name="model">owner</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="address"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="owner_action" model="ir.actions.act_window">
+        <field name="name">Owners</field>
+        <field name="res_model">owner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="views" eval="[
+            (ref('owner_view_tree'), 'tree'),
+            (ref('owner_view_form'), 'form')
+        ]"/>
+    </record>
+
+    <!-- ===== REMOVE THIS MENUITEM - It's now in base_menu.xml ===== -->
+    <!--
+    <menuitem
+        id="owner_menu_item"
+        name="Owner"
+        parent="configuration_menu"
+        action="owner_action"
+    />
+    -->
+</odoo>

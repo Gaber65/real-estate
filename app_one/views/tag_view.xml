@@ -1,0 +1,46 @@
+<odoo>
+    <record id="tag_view_tree" model="ir.ui.view">
+        <field name="name">Tag tree</field>
+        <field name="model">tag</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="tag_view_form" model="ir.ui.view">
+        <field name="name">tag form</field>
+        <field name="model">tag</field>
+        <field name="arch" type="xml">
+            <form string="tag">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="property_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tag_action" model="ir.actions.act_window">
+        <field name="name">tags</field>
+        <field name="res_model">tag</field>
+        <field name="view_mode">tree,form</field>
+        <field name="views" eval="[
+            (ref('tag_view_tree'), 'tree'),
+            (ref('tag_view_form'), 'form')
+        ]"/>
+    </record>
+
+    <!-- ===== REMOVE THIS - It references 'configuration_menu' which might not exist ===== -->
+    <!--
+    <menuitem
+        id="tag_menu_item"
+        name="Tags"
+        parent="configuration_menu"
+        action="tag_action"
+    />
+    -->
+</odoo>

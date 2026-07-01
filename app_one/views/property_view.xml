@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- =========================================================
+         TREE VIEW
+    ========================================================== -->
+    <record id="property_view_tree" model="ir.ui.view">
+        <field name="name">property.tree</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <tree class="property_custom_tree"
+                  decoration-danger="is_late and state == 'pending'"
+                  decoration-success="state == 'sold'"
+                  decoration-muted="state == 'closed'">
+
+                <field name="name"/>
+                <field name="owner_id"/>
+                <field name="building_id" optional="show"/>
+                <field name="postcode"/>
+                <field name="date_availability" optional="show"/>
+                <field name="expected_price" sum="Total Expected"/>
+                <field name="selling_price" sum="Total Selling" optional="show"/>
+                <field name="bedrooms" optional="hide"/>
+                <field name="garden" optional="hide" widget="boolean_toggle"/>
+                <field name="tag_ids" widget="many2many_tags" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'sold'"
+                       decoration-info="state == 'pending'"
+                       decoration-danger="state == 'closed'"/>
+                <field name="is_late" optional="hide" widget="boolean_toggle"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <!-- =========================================================
+         KANBAN VIEW
+    ========================================================== -->
+    <record id="property_view_kanban" model="ir.ui.view">
+        <field name="name">property.kanban</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" default_group_by="state" quick_create="false">
+                <field name="name"/>
+                <field name="expected_price"/>
+                <field name="state"/>
+                <field name="is_late"/>
+                <field name="postcode"/>
+                <field name="image_1920"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click #{record.is_late.raw_value ? 'oe_kanban_card_danger' : ''}">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('property', 'image_1920', record.id.raw_value)"
+                                     class="o_kanban_image_fit_contain" alt="Property"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </strong>
+                                <div class="text-muted">
+                                    <field name="postcode"/>
+                                </div>
+                                <div>
+                                    <field name="expected_price" widget="monetary" options="{'currency_field': false}"/>
+                                </div>
+                                <div t-if="record.is_late.raw_value" class="text-danger">
+                                    <i class="fa fa-clock-o" title="Late"/>
+                                    Late
+                                </div>
+                                <div class="mt-1">
+                                    <field name="state" widget="label_selection"
+                                           options="{'classes': {'draft': 'default', 'pending': 'info', 'sold': 'success', 'closed': 'muted'}}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- =========================================================
+         FORM VIEW
+    ========================================================== -->
+    <record id="property_view_form" model="ir.ui.view">
+        <field name="name">property.form</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <form string="Property">
+
+                <header>
+                    <button name="action_draft" string="Reset to Draft" type="object"
+                            invisible="state == 'draft'"/>
+                    <button name="action_pending" string="Mark as Pending" type="object"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_sold" string="Mark as Sold" type="object"
+                            class="oe_highlight" invisible="state != 'pending'"/>
+                    <button name="action_open_change_state_wizard" string="Close Property" type="object"
+                            class="btn-secondary" invisible="state != 'sold'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending,sold,closed"/>
+                </header>
+
+                <sheet class="property_custom_sheet" readonly="state == 'closed'">
+
+                    <div name="button_box" class="oe_button_box">
+                        <button name="open_owner_action_form_btn" type="object" class="oe_stat_button"
+                                icon="fa-user" invisible="not owner_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Owner</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <field name="active" invisible="1"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                    <widget name="web_ribbon" title="Sold" bg_color="bg-success" invisible="state != 'sold'"/>
+
+                    <field name="image_1920" widget="image" class="oe_avatar"
+                           options="{'size': [180, 180]}"/>
+
+                    <div class="oe_title property_title">
+                        <span class="o_form_label text-muted">
+                            <field name="sequence" readonly="1"/>
+                        </span>
+                        <h1>
+                            <field name="name" placeholder="e.g. Cozy 3-Bedroom Villa"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Location &amp; Availability">
+                            <field name="postcode" required="1" placeholder="e.g. 1000"/>
+                            <field name="building_id" options="{'no_create': True}"/>
+                            <field name="date_availability" required="1"/>
+                            <field name="expected_selling_date"/>
+                        </group>
+
+                        <group string="Owner">
+                            <field name="owner_id" required="1"/>
+                            <field name="owner_address" readonly="1"/>
+                            <field name="owner_phone" widget="phone"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="Characteristics">
+                            <field name="bedrooms"/>
+                            <field name="living_area"/>
+                            <field name="facades"/>
+                            <field name="garage"/>
+                            <field name="garden"/>
+                            <field name="garden_area" invisible="not garden"/>
+                            <field name="garden_orientation" invisible="not garden" widget="radio"/>
+                        </group>
+
+                        <group string="Pricing">
+                            <field name="expected_price" required="1"/>
+                            <field name="selling_price" readonly="1"/>
+                            <field name="profit_percentage" widget="percentage"/>
+                        </group>
+                    </group>
+
+                    <field name="tag_ids" widget="many2many_tags"
+                           placeholder="Add tags..."/>
+
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"
+                                   placeholder="Write a compelling description to attract buyers..."/>
+                        </page>
+                        <page string="Property Lines" name="property_lines">
+                            <field name="property_line_ids">
+                                <tree editable="bottom">
+                                    <field name="description"/>
+                                    <field name="area"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Photos" name="photos">
+                            <field name="property_image_ids" mode="kanban" context="{'default_property_id': id}">
+                                <kanban>
+                                    <field name="image_1920"/>
+                                    <field name="name"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click o_kanban_image_wrapper">
+                                                <img t-att-src="kanban_image('property.image', 'image_1920', record.id.raw_value)"
+                                                     class="o_kanban_image o_image_64_cover" alt="Property image"/>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- =========================================================
+         SEARCH VIEW
+    ========================================================== -->
+    <record id="property_view_search" model="ir.ui.view">
+        <field name="name">property.search</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Property"
+                       filter_domain="['|', ('name', 'ilike', self), ('postcode', 'ilike', self)]"/>
+                <field name="owner_id"/>
+                <field name="building_id"/>
+                <field name="tag_ids"/>
+
+                <separator/>
+                <filter string="Available" name="available" domain="[('state', 'in', ['draft', 'pending'])]"/>
+                <filter string="Sold" name="sold" domain="[('state', '=', 'sold')]"/>
+                <filter string="Late" name="late" domain="[('is_late', '=', True)]"/>
+                <filter string="Has Garden" name="has_garden" domain="[('garden', '=', True)]"/>
+
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Owner" name="group_owner" context="{'group_by': 'owner_id'}"/>
+                    <filter string="Building" name="group_building" context="{'group_by': 'building_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- =========================================================
+         ACTIONS
+    ========================================================== -->
+    <record id="property_action" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">property</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_available': 1}</field>
+        <field name="views" eval="[
+            (ref('property_view_kanban'), 'kanban'),
+            (ref('property_view_tree'), 'tree'),
+            (ref('property_view_form'), 'form')
+        ]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add your first property
+            </p>
+            <p>
+                Track properties from draft through to sold, with owner and building details in one place.
+            </p>
+        </field>
+    </record>
+
+    <record id="property_close" model="ir.actions.server">
+        <field name="name">Property Close</field>
+        <field name="model_id" ref="model_property"/>
+        <field name="binding_model_id" ref="model_property"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_closed()
+        </field>
+    </record>
+
+    <record id="action_open_change_state_wizard" model="ir.actions.server">
+        <field name="name">Open Close Wizard</field>
+        <field name="model_id" ref="model_property"/>
+        <field name="binding_model_id" ref="model_property"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_open_change_state_wizard()
+        </field>
+    </record>
+
+    <record id="property_check_is_late" model="ir.cron">
+        <field name="name">Property Check Is Late</field>
+        <field name="model_id" ref="model_property"/>
+        <field name="state">code</field>
+        <field name="code">model.compute_is_late()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+    <record id="action_property_list_view" model="ir.actions.client">
+        <field name="name">Property List (Custom)</field>
+        <field name="tag">app_one.action_list_view</field>
+    </record>
+</odoo>

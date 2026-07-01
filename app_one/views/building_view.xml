@@ -1,0 +1,71 @@
+<odoo>
+    <record id="building_view_tree" model="ir.ui.view">
+        <field name="name">building tree</field>
+        <field name="model">building</field>
+        <field name="arch" type="xml">
+            <tree class="building_custom_tree">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="code"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="building_view_form" model="ir.ui.view">
+        <field name="name">building form</field>
+        <field name="model">building</field>
+        <field name="arch" type="xml">
+            <form string="building">
+                <sheet>
+                    <group>
+                        <field name="name" hint="Enter building name"/>
+                        <field name="description"/>
+                    </group>
+                    <group>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+                <sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="building_view_search" model="ir.ui.view">
+        <field name="name">building search</field>
+        <field name="model">building</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="building_action" model="ir.actions.act_window">
+        <field name="name">Building</field>
+        <field name="res_model">building</field>
+        <field name="view_mode">tree,form</field>
+        <field name="views" eval="[
+            (ref('building_view_tree'), 'tree'),
+            (ref('building_view_form'), 'form')
+        ]"/>
+    </record>
+
+    <!-- ===== REMOVE THIS - It references 'building_menu' which doesn't exist ===== -->
+    <!--
+    <menuitem
+        id="building_menu_item"
+        name="Buildings"
+        parent="building_menu"
+        action="building_action"
+    />
+    -->
+</odoo>

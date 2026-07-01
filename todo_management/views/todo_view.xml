@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Action -->
+
+    <record id="todo_action" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">todo.task</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+
+    <!-- Search View -->
+
+    <record id="todo_search_view" model="ir.ui.view">
+        <field name="name">todo.task.search</field>
+        <field name="model">todo.task</field>
+        <field name="arch" type="xml">
+            <search>
+
+                <field name="name"/>
+                <field name="assignTo"/>
+
+                <filter
+                        name="new"
+                        string="New"
+                        domain="[('status','=','new')]"
+                />
+
+                <filter
+                        name="in_progress"
+                        string="In Progress"
+                        domain="[('status','=','in_progress')]"
+                />
+
+                <filter
+                        name="done"
+                        string="Done"
+                        domain="[('status','=','done')]"
+                />
+
+            </search>
+        </field>
+    </record>
+
+
+    <!-- Kanban View -->
+
+    <record id="todo_kanban_view" model="ir.ui.view">
+        <field name="name">todo.task.kanban</field>
+        <field name="model">todo.task</field>
+        <field name="arch" type="xml">
+
+            <kanban default_group_by="status">
+
+                <field name="name"/>
+                <field name="assignTo"/>
+                <field name="dueDate"/>
+                <field name="status"/>
+                <field name="is_late"/>
+
+                <templates>
+
+                    <t t-name="kanban-box">
+
+                        <div class="oe_kanban_card">
+
+                            <div class="oe_kanban_content">
+
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+
+                                <br/>
+
+                                <span>
+                                    <field name="assignTo"
+                                           widget="many2one_avatar_user"/>
+                                </span>
+
+                                <br/>
+
+                                <span>
+                                    Due:
+                                    <field name="dueDate"/>
+                                </span>
+
+                                <br/>
+
+                                <span
+                                    t-if="record.is_late.raw_value">
+                                    ⚠ Late
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </t>
+
+                </templates>
+
+            </kanban>
+
+        </field>
+    </record>
+
+
+<!--    &lt;!&ndash; Tree View &ndash;&gt;-->
+
+<!--    <record id="todo_tree_view" model="ir.ui.view">-->
+<!--        <field name="name">todo.task.tree</field>-->
+<!--        <field name="model">todo.task</field>-->
+<!--        <field name="arch" type="xml">-->
+
+<!--            <tree-->
+<!--                    decoration-danger="is_late == True"-->
+<!--                    decoration-success="status == 'done'"-->
+<!--                    decoration-warning="status == 'in_progress'">-->
+
+<!--                <field name="name"/>-->
+<!--                <field name="assignTo"/>-->
+<!--                <field name="dueDate"/>-->
+<!--                <field name="status"/>-->
+<!--                <field name="total_time"/>-->
+<!--                <field name="is_late"/>-->
+
+<!--            </tree>-->
+
+<!--        </field>-->
+<!--    </record>-->
+
+
+    <!-- Form View -->
+
+    <record id="todo_form_view" model="ir.ui.view">
+        <field name="name">todo.task.form</field>
+        <field name="model">todo.task</field>
+        <field name="arch" type="xml">
+
+            <form>
+
+                <sheet>
+
+                    <group>
+
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="dueDate"/>
+                        </group>
+
+                        <group>
+                            <field name="assignTo"/>
+                            <field name="status"/>
+                            <field name="total_time"/>
+                        </group>
+
+                    </group>
+
+                    <notebook>
+
+                        <page string="Task Lines">
+
+                            <field name="task_line_ids">
+
+                                <tree editable="bottom">
+
+                                    <field
+                                            name="owner_id"
+                                            widget="many2one_avatar_user"/>
+
+                                    <field
+                                            name="time"
+                                            widget="float_time"
+                                            sum="Total Hours"/>
+
+                                </tree>
+
+                            </field>
+
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+
+            </form>
+
+        </field>
+    </record>
+
+
+    <!-- Server Action -->
+
+    <record id="todo_action_done" model="ir.actions.server">
+        <field name="name">Mark As Done</field>
+        <field name="model_id" ref="model_todo_task"/>
+        <field name="binding_model_id" ref="model_todo_task"/>
+        <field name="state">code</field>
+        <field name="code">
+action = records.action_mark_as_done()
+        </field>
+    </record>
+
+
+    <!-- Menu -->
+
+    <menuitem
+            id="todo_menu_item"
+            name="Tasks"
+            parent="todo_management.menu_task"
+            action="todo_action"
+            sequence="1"/>
+
+</odoo>

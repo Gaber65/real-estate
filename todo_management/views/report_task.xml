@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_task" model="ir.actions.report">
+        <field name="name">Task Report</field>
+        <field name="model">todo.task</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">todo_management.report_task_template</field>
+        <field name="report_file">todo_management.report_task_template</field>
+        <field name="binding_model_id" ref="model_todo_task"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Task - %s' % (object.name or '')</field>
+    </record>
+
+    <template id="report_task_template">
+
+        <t t-call="web.html_container">
+
+            <t t-foreach="docs" t-as="task">
+
+                <t t-call="web.basic_layout">
+
+                    <div class="page">
+
+                        <div style="border-bottom:3px solid #714B67;padding-bottom:15px;margin-bottom:20px;">
+                            <h1 style="color:#714B67;">
+                                Task Report
+                            </h1>
+
+                            <p>
+                                Printed By:
+                                <span t-esc="env.user.name"/>
+                            </p>
+                        </div>
+
+                        <table class="table table-bordered">
+
+                            <tr>
+                                <th width="30%">Task Name</th>
+                                <td>
+                                    <span t-field="task.name"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Assigned To</th>
+                                <td>
+                                    <span t-field="task.assignTo"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Status</th>
+                                <td>
+                                    <span t-field="task.status"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Due Date</th>
+                                <td>
+                                    <span t-field="task.dueDate"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Estimated Hours</th>
+                                <td>
+                                    <span t-field="task.total_time"/>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                        <br/>
+
+                        <h3>Description</h3>
+
+                        <div style="border:1px solid #ddd;padding:10px;min-height:80px;">
+                            <span t-field="task.description"/>
+                        </div>
+
+                        <br/>
+
+                        <h3>Timesheet Lines</h3>
+
+                        <table class="table table-sm table-bordered">
+
+                            <thead>
+
+                            <tr style="background-color:#714B67;color:white;">
+                                <th>Owner</th>
+                                <th>Hours</th>
+                            </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                            <tr t-foreach="task.task_line_ids"
+                                t-as="line">
+
+                                <td>
+                                    <span t-field="line.owner_id"/>
+                                </td>
+
+                                <td>
+                                    <span t-field="line.time"/>
+                                </td>
+
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+
+                        <div style="margin-top:20px;">
+
+                            <strong>
+                                Logged Hours:
+                            </strong>
+
+                            <span t-esc="sum(task.task_line_ids.mapped('time'))"/>
+
+                        </div>
+
+                        <div style="margin-top:10px;">
+
+                            <strong>
+                                Remaining Hours:
+                            </strong>
+
+                            <span t-esc="task.total_time - sum(task.task_line_ids.mapped('time'))"/>
+
+                        </div>
+
+                        <div style="margin-top:40px;text-align:center;color:#777;">
+
+                            Generated From Odoo 17
+
+                        </div>
+
+                    </div>
+
+                </t>
+
+            </t>
+
+        </t>
+
+    </template>
+
+</odoo>

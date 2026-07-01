@@ -1,0 +1,204 @@
+<odoo>
+
+    <record id="property_report_view" model="ir.actions.report">
+        <field name="name">Property Report</field>
+        <field name="model">property</field>
+        <field name="report_type">qweb-html</field>
+        <field name="binding_model_id" ref="model_property"/>
+        <field name="binding_type">report</field>
+        <field name="report_name">app_one.property_report</field>
+    </record>
+
+
+
+
+    <template id="property_report">
+
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+
+                    <div class="page">
+
+                        <div style="text-align:center;margin-bottom:30px;">
+                            <h1 style="font-size:28px;">
+                                Property Report
+                            </h1>
+                            <p>
+                                Generated on
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                            </p>
+                        </div>
+
+                        <!-- Main Information -->
+
+                        <div style="margin-bottom:20px;">
+                            <h3 style="border-bottom:2px solid #000;">
+                                Property Information
+                            </h3>
+
+                            <table class="table table-sm">
+                                <tr>
+                                    <td><strong>Name</strong></td>
+                                    <td><span t-field="o.name"/></td>
+
+                                    <td><strong>Status</strong></td>
+                                    <td><span t-field="o.state"/></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Post Code</strong></td>
+                                    <td><span t-field="o.postcode"/></td>
+
+                                    <td><strong>Available Date</strong></td>
+                                    <td><span t-field="o.date_availability"/></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Pricing -->
+
+                        <div style="margin-bottom:20px;">
+                            <h3 style="border-bottom:2px solid #000;">
+                                Pricing Details
+                            </h3>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Expected Price</th>
+                                        <th>Selling Price</th>
+                                        <th>Profit %</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span t-field="o.expected_price"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.selling_price"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.profit_percentage"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Property Specs -->
+
+                        <div style="margin-bottom:20px;">
+                            <h3 style="border-bottom:2px solid #000;">
+                                Specifications
+                            </h3>
+
+                            <table class="table table-sm">
+                                <tr>
+                                    <td>Bedrooms</td>
+                                    <td><span t-field="o.bedrooms"/></td>
+
+                                    <td>Living Area</td>
+                                    <td><span t-field="o.living_area"/></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Facades</td>
+                                    <td><span t-field="o.facades"/></td>
+
+                                    <td>Garden Area</td>
+                                    <td><span t-field="o.garden_area"/></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Garage</td>
+                                    <td>
+                                        <span t-esc="'Yes' if o.garage else 'No'"/>
+                                    </td>
+
+                                    <td>Garden</td>
+                                    <td>
+                                        <span t-esc="'Yes' if o.garden else 'No'"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Owner -->
+
+                        <div style="margin-bottom:20px;">
+                            <h3 style="border-bottom:2px solid #000;">
+                                Owner Information
+                            </h3>
+
+                            <table class="table table-sm">
+                                <tr>
+                                    <td>Name</td>
+                                    <td>
+                                        <span t-field="o.owner_id"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Address</td>
+                                    <td>
+                                        <span t-field="o.owner_address"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Phone</td>
+                                    <td>
+                                        <span t-field="o.owner_phone"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Property Lines -->
+
+                        <div>
+                            <h3 style="border-bottom:2px solid #000;">
+                                Property Details
+                            </h3>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Description</th>
+                                        <th>Area</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr t-foreach="o.property_line_ids"
+                                        t-as="line">
+
+                                        <td>
+                                            <span t-esc="line_index + 1"/>
+                                        </td>
+
+                                        <td>
+                                            <span t-field="line.description"/>
+                                        </td>
+
+                                        <td>
+                                            <span t-field="line.area"/>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </t>
+            </t>
+        </t>
+
+    </template>
+</odoo>

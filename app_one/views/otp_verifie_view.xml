@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="estate_otp_view_tree" model="ir.ui.view">
+        <field name="name">estate.otp.tree</field>
+        <field name="model">estate.otp</field>
+        <field name="arch" type="xml">
+            <tree string="OTP Records">
+                <field name="phone"/>
+                <field name="otp_code" password="True"/>
+                <field name="expires_at"/>
+                <field name="verified" widget="boolean_toggle"
+                       decoration-success="verified == True"
+                       decoration-danger="verified == False"/>
+                <field name="attempt_count"
+                       decoration-danger="attempt_count >= 3"/>
+                <field name="purpose" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="estate_otp_view_form" model="ir.ui.view">
+        <field name="name">estate.otp.form</field>
+        <field name="model">estate.otp</field>
+        <field name="arch" type="xml">
+            <form string="OTP Verification">
+                <header>
+                    <button name="action_verify" string="Verify OTP" type="object"
+                            class="btn-primary" invisible="verified == True"/>
+                    <button name="action_resend" string="Resend OTP" type="object"
+                            class="btn-secondary"/>
+                    <button name="action_invalidate" string="Invalidate" type="object"
+                            class="btn-danger" invisible="verified == True"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_send_otp" type="object" class="oe_stat_button"
+                                icon="fa-envelope">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Send OTP</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <group>
+                        <group string="OTP Details">
+                            <field name="phone" required="1" widget="phone"/>
+                            <field name="purpose" widget="radio"/>
+                            <field name="otp_code" required="1" password="True"/>
+                            <field name="expires_at"/>
+                        </group>
+                        <group string="Status">
+                            <field name="verified" widget="boolean_toggle"/>
+                            <field name="attempt_count"
+                                   decoration-danger="attempt_count >= 3"/>
+                            <field name="is_expired" compute="_compute_is_expired" string="Expired"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="estate_otp_view_search" model="ir.ui.view">
+        <field name="name">estate.otp.search</field>
+        <field name="model">estate.otp</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="phone"/>
+                <field name="otp_code"/>
+                <field name="purpose"/>
+
+                <separator/>
+                <filter string="Verified" name="verified" domain="[('verified','=',True)]"/>
+                <filter string="Not Verified" name="not_verified" domain="[('verified','=',False)]"/>
+                <filter string="Expired" name="expired" domain="[('expires_at','&lt;',context_today)]"/>
+                <filter string="Max Attempts" name="max_attempts" domain="[('attempt_count','>=',3)]"/>
+
+                <separator/>
+                <filter string="Verify Purpose" name="purpose_verify" domain="[('purpose','=','verify')]"/>
+                <filter string="Reset Password" name="purpose_reset" domain="[('purpose','=','reset')]"/>
+
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_verified" context="{'group_by': 'verified'}"/>
+                    <filter string="Purpose" name="group_purpose" context="{'group_by': 'purpose'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="estate_otp_action" model="ir.actions.act_window">
+        <field name="name">OTP Verifications</field>
+        <field name="res_model">estate.otp</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_not_verified': 1}</field>
+    </record>
+
+    <!-- ===== REMOVE THIS MENUITEM ===== -->
+</odoo>

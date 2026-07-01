@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="property_line_view_tree" model="ir.ui.view">
+        <field name="name">property.line.tree</field>
+        <field name="model">property.line</field>
+        <field name="arch" type="xml">
+            <tree string="Property Lines">
+                <field name="sequence"/>
+                <field name="description"/>
+                <field name="area" sum="Total Area"/>
+                <field name="property_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="property_line_view_form" model="ir.ui.view">
+        <field name="name">property.line.form</field>
+        <field name="model">property.line</field>
+        <field name="arch" type="xml">
+            <form string="Property Line">
+                <sheet>
+                    <group>
+                        <field name="sequence"/>
+                        <field name="description" required="1"/>
+                        <field name="area" required="1"/>
+                        <field name="property_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="property_line_action" model="ir.actions.act_window">
+        <field name="name">Property Lines</field>
+        <field name="res_model">property.line</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

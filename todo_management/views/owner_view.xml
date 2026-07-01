@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="owner_action" model="ir.actions.act_window">
+        <field name="name">Owners</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="owner_menu_item"
+        name="Owner"
+        parent="todo_management.menu_users"
+        action="todo_management.owner_action"
+    />
+
+</odoo>

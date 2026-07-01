@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <record id="property_sequence" model="ir.sequence">
+            <field name="name">Property Sequence</field>
+            <field name="code">property_sequence</field>
+            <field name="prefix">PRO</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

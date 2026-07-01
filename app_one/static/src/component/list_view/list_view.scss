@@ -1,0 +1,237 @@
+/**
+ * Odoo 17 OWL ListView Component Styles
+ */
+
+.o_list_view {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+
+    .o_list_view_header {
+        padding: 1rem;
+        border-bottom: 1px solid #e0e0e0;
+        background-color: #f8f9fa;
+
+        .o_list_view_toolbar {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+
+            .o_search_bar {
+                flex: 1;
+                max-width: 400px;
+
+                .o_search_input {
+                    width: 100%;
+                    padding: 0.5rem 0.75rem;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    font-size: 0.875rem;
+
+                    &:focus {
+                        outline: none;
+                        border-color: #007bff;
+                        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+                    }
+                }
+            }
+
+            .o_action_buttons {
+                display: flex;
+                gap: 0.5rem;
+
+                button {
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+
+    .o_list_view_loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 1rem;
+        gap: 1rem;
+
+        .spinner-border {
+            color: #007bff;
+        }
+
+        span {
+            color: #666;
+            font-size: 0.95rem;
+        }
+    }
+
+    .o_list_view_empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 1rem;
+        color: #999;
+        font-size: 1rem;
+        text-align: center;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .o_list_view_container {
+        flex: 1;
+        overflow: auto;
+
+        table {
+            margin-bottom: 0;
+
+            thead {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+
+                th {
+                    padding: 1rem 0.75rem;
+                    font-size: 0.875rem;
+                    font-weight: 600;
+                    text-align: left;
+                    color: #333;
+                    border-color: #e0e0e0;
+                    white-space: nowrap;
+
+                    &.o_list_checkbox_column {
+                        width: 50px;
+                        text-align: center;
+                    }
+
+                    &.o_list_actions_column {
+                        width: 100px;
+                        text-align: center;
+                    }
+
+                    &.o_list_column_header {
+                        cursor: pointer;
+                        user-select: none;
+                        transition: background-color 0.2s;
+
+                        &:hover {
+                            background-color: #f0f0f0;
+                        }
+
+                        .o_column_title {
+                            display: inline-block;
+                            margin-right: 0.5rem;
+                        }
+
+                        .o_sort_indicator {
+                            font-size: 0.75rem;
+                            color: #007bff;
+                            opacity: 0.7;
+                        }
+                    }
+                }
+            }
+
+            tbody {
+                tr.o_list_row {
+                    transition: background-color 0.2s;
+
+                    &:hover {
+                        background-color: #f9f9f9;
+                    }
+
+                    &.o_list_row_selected {
+                        background-color: #e7f3ff;
+                        border-left: 3px solid #007bff;
+                    }
+
+                    td {
+                        padding: 0.75rem;
+                        font-size: 0.875rem;
+                        color: #333;
+                        border-color: #e9ecef;
+                        vertical-align: middle;
+
+                        &.o_list_checkbox_column {
+                            text-align: center;
+
+                            input[type="checkbox"] {
+                                cursor: pointer;
+                                width: 18px;
+                                height: 18px;
+                            }
+                        }
+
+                        &.o_list_cell {
+                            cursor: pointer;
+                            transition: color 0.2s;
+
+                            &:hover {
+                                color: #007bff;
+                            }
+                        }
+
+                        &.o_list_actions_column {
+                            text-align: center;
+
+                            .o_list_actions_dropdown {
+                                display: flex;
+                                gap: 0.25rem;
+                                justify-content: center;
+
+                                button {
+                                    padding: 0.25rem 0.5rem;
+                                    font-size: 0.8rem;
+
+                                    &:hover {
+                                        opacity: 0.8;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .o_list_view {
+        .o_list_view_header {
+            padding: 0.75rem;
+
+            .o_list_view_toolbar {
+                flex-direction: column;
+                align-items: stretch;
+
+                .o_search_bar {
+                    max-width: 100%;
+                }
+
+                .o_action_buttons {
+                    flex-wrap: wrap;
+                }
+            }
+        }
+
+        .o_list_view_container {
+            table {
+                font-size: 0.8rem;
+
+                thead th {
+                    padding: 0.75rem 0.5rem;
+                }
+
+                tbody td {
+                    padding: 0.5rem;
+                }
+            }
+        }
+    }
+}
