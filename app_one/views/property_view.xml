@@ -62,7 +62,7 @@
                                     <field name="postcode"/>
                                 </div>
                                 <div>
-                                    <field name="expected_price" widget="monetary" options="{'currency_field': false}"/>
+                                    <field name="expected_price" widget="monetary"/>
                                 </div>
                                 <div t-if="record.is_late.raw_value" class="text-danger">
                                     <i class="fa fa-clock-o" title="Late"/>

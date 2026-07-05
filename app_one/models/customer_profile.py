@@ -50,6 +50,12 @@ class EstateCustomer(models.Model):
     max_price = fields.Float(string="Max Budget")
     preferred_area = fields.Char(string="Preferred Area")
 
+    # Favorite properties
+    favorite_property_ids = fields.Many2many(
+        'fav.prop',
+        string="Favorite Properties"
+    )
+
     @api.constrains('user_id')
     def _check_user_type(self):
         for customer in self:

@@ -61,8 +61,8 @@
                             <field name="is_verified" widget="boolean_toggle"/>
                         </group>
                         <group string="Preferences">
-                            <field name="min_price" widget="monetary" options="{'currency_field': false}"/>
-                            <field name="max_price" widget="monetary" options="{'currency_field': false}"/>
+                            <field name="min_price" widget="monetary"/>
+                            <field name="max_price" widget="monetary"/>
                             <field name="preferred_area"/>
                             <field name="date_joined" readonly="1"/>
                         </group>
@@ -96,6 +96,7 @@
                         <page string="Activity">
                             <field name="message_ids"/>
                         </page>
+
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">
@@ -113,7 +114,8 @@
         <field name="model">estate.customer</field>
         <field name="arch" type="xml">
             <search>
-                <field name="full_name" string="Name" filter_domain="['|','|','|',('full_name','ilike',self),('phone','ilike',self),('email','ilike',self),('address','ilike',self)]"/>
+                <field name="full_name" string="Name"
+                       filter_domain="['|','|','|',('full_name','ilike',self),('phone','ilike',self),('email','ilike',self),('address','ilike',self)]"/>
                 <field name="email"/>
                 <field name="phone"/>
                 <field name="address"/>
@@ -128,7 +130,8 @@
 
                 <group expand="0" string="Group By">
                     <filter string="Verification Status" name="group_verified" context="{'group_by': 'is_verified'}"/>
-                    <filter string="Preferred Contact" name="group_contact" context="{'group_by': 'preferred_contact'}"/>
+                    <filter string="Preferred Contact" name="group_contact"
+                            context="{'group_by': 'preferred_contact'}"/>
                     <filter string="Date Joined" name="group_date" context="{'group_by': 'date_joined'}"/>
                 </group>
             </search>

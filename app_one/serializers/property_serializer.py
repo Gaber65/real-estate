@@ -4,29 +4,59 @@ from odoo.http import request
 class PropertySerializer:
 
     @staticmethod
-    def serialize(property_record):
+    def serialize(record):
         base_url = request.httprequest.host_url.rstrip('/')
 
         return {
-            'id': property_record.id,
-            'sequence': property_record.sequence,
-            'name': property_record.name,
-            'description': property_record.description,
-            'postcode': property_record.postcode,
-            'expected_price': property_record.expected_price,
-            'selling_price': property_record.selling_price,
-            'state': property_record.state,
-            'owner': {
-                'id': property_record.owner_id.id,
-                'name': property_record.owner_id.name,
-                'address': property_record.owner_id.address,
-                'phone': property_record.owner_id.phone,
-                'image_url': (
-                    f'{base_url}/web/image/owner/{property_record.owner_id.id}/owner_image'
-                    if property_record.owner_id.owner_image
-                    else None
+            "id": record.id,
+            "sequence": record.sequence,
+            "name": record.name,
+            "description": record.description,
+
+            # Location & Availability
+            "postcode": record.postcode,
+            "state": record.state,
+
+            # Building
+            "building": {
+                "id": record.building_id.id,
+                "name": record.building_id.name,
+                "description": record.building_id.description,
+                "code": record.building_id.code,
+            } if record.building_id else None,
+
+            # Owner
+            "owner": {
+                "id": record.owner_id.id,
+                "name": record.owner_id.name,
+                "address": record.owner_id.address,
+                "phone": record.owner_id.phone,
+                "image_url": (
+                    f"{base_url}/web/image/owner/{record.owner_id.id}/owner_image"
+                    if record.owner_id.owner_image else None
                 ),
-            } if property_record.owner_id else None,
+            } if record.owner_id else None,
+
+            # Characteristics
+            "bedrooms": record.bedrooms,
+            "living_area": record.living_area,
+            "facades": record.facades,
+            "garage": record.garage,
+            "garden": record.garden,
+            "garden_area": record.garden_area,
+            "garden_orientation": record.garden_orientation,
+
+            # Pricing
+            "selling_price": record.selling_price,
+
+            # Photos
+            "photos": [
+                {
+                    "id": photo.id,
+                    "url": f"{base_url}/web/image/property.image/{photo.id}/image"
+                }
+                for photo in record.property_image_ids
+            ],
         }
 
     @staticmethod

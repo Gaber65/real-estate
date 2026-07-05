@@ -28,3 +28,11 @@ access_change_state_wizard_agent,change.state.wizard.agent,model_change_state_wi
 access_client_admin,client.admin,model_client,group_estate_admin,1,1,1,1
 access_client_agent,client.agent,model_client,group_estate_agent,1,1,1,1
 access_client_owner,client.owner,model_client,group_estate_owner,1,0,0,0
+access_real_estate_otp_user,real_estate.otp.user,model_real_estate_otp,base.group_user,1,0,0,0
+access_real_estate_otp_system,real_estate.otp.system,model_real_estate_otp,base.group_system,1,1,1,1
+access_real_estate_refresh_token_system,real_estate.refresh_token.system,model_real_estate_refresh_token,base.group_system,1,1,1,1
+access_real_estate_login_session_user,real_estate.login_session.user,model_real_estate_login_session,base.group_user,1,0,0,0
+access_real_estate_login_session_system,real_estate.login_session.system,model_real_estate_login_session,base.group_system,1,1,1,1
+access_real_estate_token_blacklist_system,real_estate.token_blacklist.system,model_real_estate_token_blacklist,base.group_system,1,1,1,1
+access_real_estate_audit_log_user,real_estate.audit_log.user,model_real_estate_audit_log,base.group_user,1,0,0,0
+access_real_estate_audit_log_system,real_estate.audit_log.system,model_real_estate_audit_log,base.group_system,1,1,1,1

@@ -1,7 +1,11 @@
+from odoo.fields import Date
+
 from odoo import http
 from odoo.http import request
+from ..helpers.auth_guard import require_auth
+from ..helpers.exception_handler import handle_exceptions
+from ..helpers.global_response import GlobalResponse
 
-from ..utils.global_response import GlobalResponse
 from ..utils.api_exception_handler import api_exception_handler
 
 from ..services.property_service import PropertyService
@@ -22,6 +26,8 @@ class PropertyController(http.Controller):
         csrf=False
     )
     @api_exception_handler
+    @handle_exceptions
+    @require_auth
     def get_properties(self, property_id=None, **kwargs):
 
         # GET BY ID
@@ -32,14 +38,12 @@ class PropertyController(http.Controller):
             )
 
             if not property_record:
-                return GlobalResponse.api_response(
-                    success=False,
+                return GlobalResponse.error(
                     message='Property not found',
                     status=404
                 )
 
-            return GlobalResponse.api_response(
-                success=True,
+            return GlobalResponse.success(
                 message='Property retrieved successfully',
                 data=PropertySerializer.serialize(
                     property_record
@@ -65,8 +69,11 @@ class PropertyController(http.Controller):
 
         pages = math.ceil(total / limit) if total else 0
 
-        return GlobalResponse.api_response(
-            success=True,
+        properties = properties.filtered(
+            lambda p: p.state in ("closed", "sold")
+        )
+
+        return GlobalResponse.success(
             message='Properties retrieved successfully',
             data={
                 'items': PropertySerializer.serialize_many(
@@ -102,8 +109,7 @@ class PropertyController(http.Controller):
 
         property_record = PropertyService.create(data)
 
-        return GlobalResponse.api_response(
-            success=True,
+        return GlobalResponse.success(
             message='Property created successfully',
             data=PropertySerializer.serialize(
                 property_record
@@ -133,14 +139,12 @@ class PropertyController(http.Controller):
         )
 
         if not property_record:
-            return GlobalResponse.api_response(
-                success=False,
+            return GlobalResponse.error(
                 message='Property not found',
                 status=404
             )
 
-        return GlobalResponse.api_response(
-            success=True,
+        return GlobalResponse.success(
             message='Property updated successfully',
             data=PropertySerializer.serialize(
                 property_record
@@ -163,14 +167,12 @@ class PropertyController(http.Controller):
         )
 
         if not deleted:
-            return GlobalResponse.api_response(
-                success=False,
+            return GlobalResponse.error(
                 message='Property not found',
                 status=404
             )
 
-        return GlobalResponse.api_response(
-            success=True,
+        return GlobalResponse.success(
             message='Property deleted successfully',
             status=200
         )

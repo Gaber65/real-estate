@@ -1,5 +1,5 @@
 from odoo import http
-from .global_response import GlobalResponse
+from ..helpers.global_response import GlobalResponse
 
 
 class ApiErrorController(http.Controller):
@@ -13,14 +13,11 @@ class ApiErrorController(http.Controller):
     )
     def api_not_found(self, path):
 
-        return GlobalResponse.api_response(
+        return GlobalResponse.error(
             
-                success= False,
                 status= 404,
                 message= 'Endpoint not found',
-                errors= [
-                    f'/api/${path} does not exist'
-                ],
+
                 data= None
         
         )

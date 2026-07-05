@@ -14,6 +14,7 @@
                        decoration-danger="user_type == 'admin'"/>
                 <field name="phone"/>
                 <field name="is_verified" widget="boolean_toggle"/>
+                <field name="is_active_account" widget="boolean_toggle"/>
                 <field name="full_name"/>
                 <field name="address"/>
             </xpath>
