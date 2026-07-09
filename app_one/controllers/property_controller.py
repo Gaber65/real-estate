@@ -1,8 +1,5 @@
-from odoo.fields import Date
-
 from odoo import http
 from odoo.http import request
-from ..helpers.auth_guard import require_auth
 from ..helpers.exception_handler import handle_exceptions
 from ..helpers.global_response import GlobalResponse
 
@@ -27,7 +24,6 @@ class PropertyController(http.Controller):
     )
     @api_exception_handler
     @handle_exceptions
-    @require_auth
     def get_properties(self, property_id=None, **kwargs):
 
         # GET BY ID

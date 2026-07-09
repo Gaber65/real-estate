@@ -27,6 +27,7 @@
         'views/customer_view.xml',
         'views/building_view.xml',
         'views/tag_view.xml',
+        'views/banner_view.xml',
         'views/user_view.xml',
         'views/estate_auth_token_view.xml',
         'views/otp_verifie_view.xml',

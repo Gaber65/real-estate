@@ -100,7 +100,7 @@ class AuthController(http.Controller):
     # ------------------------------------------------------------------
     # Login / Logout / Refresh
     # ------------------------------------------------------------------
-    @http.route('/api/auth/login', type='http', auth='public', methods=['POST'], csrf=False)
+    @http.route('/api/auth/login', type='http', auth='public', methods=['POST'], csrf=False ,cors="*")
     @handle_exceptions
     def login(self, **kwargs):
         payload = get_json_body(request)

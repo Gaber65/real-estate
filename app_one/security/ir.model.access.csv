@@ -36,3 +36,5 @@ access_real_estate_login_session_system,real_estate.login_session.system,model_r
 access_real_estate_token_blacklist_system,real_estate.token_blacklist.system,model_real_estate_token_blacklist,base.group_system,1,1,1,1
 access_real_estate_audit_log_user,real_estate.audit_log.user,model_real_estate_audit_log,base.group_user,1,0,0,0
 access_real_estate_audit_log_system,real_estate.audit_log.system,model_real_estate_audit_log,base.group_system,1,1,1,1
+access_banner_admin,banner.admin,model_property_banner,group_estate_admin,1,1,1,1
+access_banner_agent,banner.agent,model_property_banner,group_estate_agent,1,1,1,1

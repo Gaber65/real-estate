@@ -2,6 +2,7 @@ from . import building
 from . import property
 from . import property_image
 from . import tag
+from . import banner
 from . import owner
 from . import client
 from . import customer_profile

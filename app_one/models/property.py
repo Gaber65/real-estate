@@ -21,6 +21,7 @@ class Property(models.Model):
 
     expected_price = fields.Float(required=True)
     active = fields.Boolean(default=True)
+    is_featured = fields.Boolean(default=False)
 
     selling_price = fields.Float(
         compute='_compute_selling_price',

@@ -1,0 +1,52 @@
+<odoo>
+    <record id="banner_view_tree" model="ir.ui.view">
+        <field name="name">Banner tree</field>
+        <field name="model">property.banner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="sequence"/>
+                <field name="active"/>
+                <field name="image" widget="image"/>
+                <field name="action_type"/>
+                <field name="external_url"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="banner_view_form" model="ir.ui.view">
+        <field name="name">banner form</field>
+        <field name="model">property.banner</field>
+        <field name="arch" type="xml">
+            <form string="Banner">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                        <field name="image" widget="image"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="property_id"/>
+                        <field name="tag_id"/>
+                        <field name="action_type"/>
+                        <field name="external_url"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="banner_action" model="ir.actions.act_window">
+        <field name="name">Banners</field>
+        <field name="res_model">property.banner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="views" eval="[
+            (ref('banner_view_tree'), 'tree'),
+            (ref('banner_view_form'), 'form')
+        ]"/>
+    </record>
+
+    <menuitem id="menu_estate_banners" name="Banners" parent="menu_estate_root" sequence="55"/>
+    <menuitem id="menu_estate_banner_list" name="All Banners" parent="menu_estate_banners" action="banner_action" sequence="10"/>
+</odoo>
